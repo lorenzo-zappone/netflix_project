@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "airflow-astro"
+version = "0.1.0"
+description = ""
+authors = ["lorenzo-analisou <138704416+lorenzo-analisou@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+astro = "^0.2.7"
+apache-airflow-providers-dbt-cloud = "^3.7.1"
+apache-airflow-providers-airbyte = "^3.7.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
