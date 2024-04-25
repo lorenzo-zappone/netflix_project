@@ -1,58 +1,46 @@
-Running an Airbyte and DBT job with Airflow
+# Running an Airbyte and DBT job with Airflow
+
 This pipeline demonstrates how to run an Airbyte job to sync data from a source, and then run a DBT job to transform and load the data into a destination. The Airflow sensors ensure that the Airbyte job completes successfully before running the DBT job, and that the DBT job completes successfully before the pipeline finishes.
 
-Requirements
+## Requirements
+
 To run this pipeline, you need:
 
-An Airflow environment with the necessary Airflow providers installed (e.g. pip install 'apache-airflow[amazon,azure,google,mysql,postgres,ssh,databricks,docker,kubernetes,celery,hashicorp,http,celery,redis,grpc,elasticsearch,spark,statsd,prometheus,kubernetes_executor,kubernetes_pod_operator,kubernetes_secret,postgres,ssh,ssh_hook,ssh_tunnel,http,minio]')
-An Airbyte account and an Airbyte source and destination configured
-A DBT Cloud account and a DBT project with at least one model configured
+- An Airflow environment with the necessary Airflow providers installed (e.g. `pip install 'apache-airflow[amazon,azure,google,mysql,postgres,ssh,databricks,docker,kubernetes,celery,hashicorp,http,celery,redis,grpc,elasticsearch,spark,statsd,prometheus,kubernetes_executor,kubernetes_pod_operator,kubernetes_secret,postgres,ssh,ssh_hook,ssh_tunnel,http,minio]'`)
+- An Airbyte account and an Airbyte source and destination configured
+- A DBT Cloud account and a DBT project with at least one model configured
 
+## Setup
 
-Setup
-Configure the Airflow environment
-1.
-Open the Airflow UI in your web browser.
-2.
-Click on the "Admin" menu item in the top-left corner, then select "Connections" from the dropdown menu.
-3.
-Click on the "Add" button to create a new connection.
-4.
-Choose an appropriate connection type (e.g. "SSH") and fill in the necessary information (e.g. hostname, port, username, password, etc.).
-5.
-Repeat steps 3 and 4 for any additional connections that you need (e.g. an Airbyte connection, a DBT Cloud connection, etc.).
+### Configure the Airflow environment
 
+1. Open the Airflow UI in your web browser.
+2. Click on the "Admin" menu item in the top-left corner, then select "Connections" from the dropdown menu.
+3. Click on the "Add" button to create a new connection.
+4. Choose an appropriate connection type (e.g. "SSH") and fill in the necessary information (e.g. hostname, port, username, password, etc.).
+5. Repeat steps 3 and 4 for any additional connections that you need (e.g. an Airbyte connection, a DBT Cloud connection, etc.).
 
-Configure the Airbyte connection
-1.
-Open the Airbyte UI in your web browser.
-2.
-Click on the "Settings" icon in the top-right corner, then select "Connections" from the dropdown menu.
-3.
-Click on the "Add connection" button to create a new connection.
-4.
-Choose an appropriate source or destination, then fill in the necessary information (e.g. server URL, API key, etc.).
-5.
-Repeat steps 3 and 4 for any additional connections that you need.
+### Configure the Airbyte connection
 
+1. Open the Airbyte UI in your web browser.
+2. Click on the "Settings" icon in the top-right corner, then select "Connections" from the dropdown menu.
+3. Click on the "Add connection" button to create a new connection.
+4. Choose an appropriate source or destination, then fill in the necessary information (e.g. server URL, API key, etc.).
+5. Repeat steps 3 and 4 for any additional connections that you need.
 
-Configure the DBT Cloud connection
-1.
-Open the DBT Cloud UI in your web browser.
-2.
-Click on the "Settings" icon in the top-right corner, then select "Connections" from the dropdown menu.
-3.
-Click on the "Add connection" button to create a new connection.
-4.
-Choose "dbt Cloud" as the connection type, then fill in the necessary information (e.g. API key, etc.).
-5.
-Repeat steps 3 and 4 for any additional connections that you need.
+### Configure the DBT Cloud connection
 
+1. Open the DBT Cloud UI in your web browser.
+2. Click on the "Settings" icon in the top-right corner, then select "Connections" from the dropdown menu.
+3. Click on the "Add connection" button to create a new connection.
+4. Choose "dbt Cloud" as the connection type, then fill in the necessary information (e.g. API key, etc.).
+5. Repeat steps 3 and 4 for any additional connections that you need.
 
-Create the DAG file
-1.
-Create a new Python file (e.g. airflow_pipeline.py) and add the following code to it:
+### Create the DAG file
 
+1. Create a new Python file (e.g. `airflow_pipeline.py`) and add the following code to it:
+
+```python
 from airflow.decorators import dag, task
 from pendulum import datetime
 from airflow.providers.dbt.cloud.hooks.dbt import DbtCloudHook, DbtCloudJobRunStatus
@@ -116,21 +104,15 @@ def running_airbyte_dbt_job():
 
 # Execute the DAG
 running_airbyte_dbt_job()
+```
 
-2.
-Replace the placeholders with the actual connection IDs and job IDs that you obtained from the previous steps.
-3.
-Save the file.
+2. Replace the placeholders with the actual connection IDs and job IDs that you obtained from the previous steps.
+3. Save the file.
 
+### Test the pipeline
 
-Test the pipeline
-1.
-Open the Airflow UI in your web browser.
-2.
-Click on the "DAGs" menu item in the top-left corner, then select "Tree" from the dropdown menu.
-3.
-Find the "running_airbyte_dbt_job" DAG in the tree view, then click on the "Play" button to run the pipeline.
-4.
-Monitor the pipeline execution status in the "Task Instance" tab.
-5.
-Once the pipeline has completed successfully, you should be able to see the results in the DBT Cloud UI.
+1. Open the Airflow UI in your web browser.
+2. Click on the "DAGs" menu item in the top-left corner, then select "Tree" from the dropdown menu.
+3. Find the "running_airbyte_dbt_job" DAG in the tree view, then click on the "Play" button to run the pipeline.
+4. Monitor the pipeline execution status in the "Task Instance" tab.
+5. Once the pipeline has completed successfully, you should be able to see the results in the DBT Cloud UI.
