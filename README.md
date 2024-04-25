@@ -1,12 +1,14 @@
 # Running an Airbyte and DBT job with Airflow
 
-This pipeline demonstrates how to run an Airbyte job to sync data from a source, and then run a DBT job to transform and load the data into a destination. The Airflow sensors ensure that the Airbyte job completes successfully before running the DBT job, and that the DBT job completes successfully before the pipeline finishes.
+This pipeline demonstrates how to run an Airbyte job to sync data from a source (Google Sheets), and then run a DBT job to transform and load the data into a destination (PostgreSQL). 
+
+The Airflow sensors ensure that the Airbyte job completes successfully before running the DBT job, and that the DBT job completes successfully before the pipeline finishes.
 
 ## Requirements
 
 To run this pipeline, you need:
 
-- An Airflow environment with the necessary Airflow providers installed (e.g. `pip install 'apache-airflow[amazon,azure,google,mysql,postgres,ssh,databricks,docker,kubernetes,celery,hashicorp,http,celery,redis,grpc,elasticsearch,spark,statsd,prometheus,kubernetes_executor,kubernetes_pod_operator,kubernetes_secret,postgres,ssh,ssh_hook,ssh_tunnel,http,minio]'`)
+- An Airflow environment with the necessary Airflow providers installed
 - An Airbyte account and an Airbyte source and destination configured
 - A DBT Cloud account and a DBT project with at least one model configured
 
@@ -17,7 +19,7 @@ To run this pipeline, you need:
 1. Open the Airflow UI in your web browser.
 2. Click on the "Admin" menu item in the top-left corner, then select "Connections" from the dropdown menu.
 3. Click on the "Add" button to create a new connection.
-4. Choose an appropriate connection type (e.g. "SSH") and fill in the necessary information (e.g. hostname, port, username, password, etc.).
+4. Choose an appropriate connection type and fill in the necessary information (e.g. hostname, port, username, password, etc.).
 5. Repeat steps 3 and 4 for any additional connections that you need (e.g. an Airbyte connection, a DBT Cloud connection, etc.).
 
 ### Configure the Airbyte connection
